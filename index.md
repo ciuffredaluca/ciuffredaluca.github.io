@@ -1,8 +1,11 @@
 ---
 layout: home
 profile_picture:
-  src: /assets/img/profile-pic.jpg
+  src: /assets/img/golgi.jpg
   alt: website picture
+  caption: First ever complete view of a 
+           <br> brain region from Nobel 
+           <br> laureate Camillo Golgi in 1875.
 ---
 
 <p>

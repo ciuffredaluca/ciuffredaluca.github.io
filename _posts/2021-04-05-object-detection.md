@@ -1,54 +1,92 @@
 ---
 layout: post
-title:  "Another Post example"
-date:   2019-10-26 10:00:40
+title:  "Object detection"
+date:   2021-04-05 14:12:40
 blurb: "A look at an example post using Bay Jekyll theme."
 og_image: /assets/img/content/post-example/Banner.jpg
 ---
 
-<img src="{{ "/assets/img/content/post-example/Banner.jpg" | absolute_url }}" alt="bay" class="post-pic"/>
-<br />
-<br />
+ <style>
+    figure {
+      border: none;
+      position: inline;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+     }
+  
+  figcaption {
+    background-color: white;
+    color: black;
+    font-style: italic;
+    padding: 2px;
+    text-align: center;
+  }
 
-This is an example of blog post.
-Picture by [Bethany Legg](https://unsplash.com/@bkotynski).
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum[^1].
-
-<br />
+  .center {
+  text-align: center;
+}
+  </style>
 
 
-#### Table of Contents
-1. [Part 1](#part-1)
-2. [Part 2](#part-2)
-    * [Part 2 Sub-part 1](#part-2-sub-part-1)
-    * [Part 2 Sub-part 2](#part-2-sub-part-2)
+# Table of Contents
+1. [Part 1: Learn to localize a single object](#learn-to-localize-a-single-object)
+2. [Part 2: Sliding windows](#try-to-localize-multiple-objects-sliding-windows)
 3. [Footnotes](#footnotes)
 
-#### PART 1
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-<br />
+# Learn to localize a single object
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Assume to have a single (or none) object of interest per image in our dataset out of $n$ possible object classes. For instance, say we want to localize a dog in the following image:
 
-<br />
-<br />
+{:.center}
+![good boy](/assets/img/object-detection/labrador-retreiver.png){:width="450px"}
+<br>This is a good boy.
 
-#### PART 2
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+One way to extend image classification to also localize the object is to define the following variables associated to the bounding box localizing the object:
 
-<br />
+- the *center* of the bounding box, ($b_x$, $b_y$)
+- the *height* ($b_h$) and *width* ($b_w$) of the box
 
-##### PART 2 SUB PART 1
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+In addition to spatial properties we define:
 
-<br />
+- $p_c$ as the probability of an object to be present (either 1 or 0 in the training set)
+- $[C_1, \ldots, C_n]$ a one-hot reresentation of the $n$ possible classes.[^1]
 
-##### PART 2 SUB PART 2
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+We can then finally model our target variable $y$ as follows:
 
-<br />
+$$
+y = \begin{bmatrix}
+        p_{c} \\
+        b_{x} \\
+        b_{y} \\
+        b_{h} \\
+        b_{w} \\
+        C_{1} \\
+        \vdots \\
+        C_n
+        \end{bmatrix}
+$$
 
+We assume that $[b_{x}, b_{y}, b_{h}, b_{w} , C_{1}, \ldots, C_n]$ are not relevant if $p_c = 0$ (only background is present); this is possible if the loss function has a functional form explicitly depending on $p_c$,
+
+$$
+L(y, \hat{y}) = \theta(y^0)f(y, \hat{y}) + (1 - \theta(y^0)) g(y^0, \hat{y}^0). 
+$$
+
+For instance, we might cast the loss as $L_2$ norm,
+
+$$
+L(y, \hat{y}) = \begin{cases} 
+      ||y - \hat{y}||^2, & y^0 ( = p_c) = 1 \\
+      (y^0 - \hat{y}^0)^2, & y^0 ( = p_c) = 0
+   \end{cases}
+$$
+
+## Try to localize multiple objects: sliding windows
+
+{:.center}
+![sliding window](/assets/img/object-detection/sliding-window.gif){:width="450px"; class="img-responsive"}
+<br>This is a good boy with sliding windows.
 
 ##### FOOTNOTES
 

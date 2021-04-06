@@ -8,10 +8,4 @@ profile_picture:
            <br> laureate Camillo Golgi in 1875.
 ---
 
-<p>
-  Welcome! This site serves as an example for the Bay Jekyll theme. Bay is a very simple and minimal theme, directly inspired by Dan Grover's <a href="http://dangrover.com">website</a>.
-</p>
-
-<p>
-  You can find the source code and the instructions on <a href="https://github.com/eliottvincent/bay">GitHub</a>.
-</p>
+Hi, my name is Luca! I like reading papers. Over the years I've spent some time reading stuff about *physics*, *neuroscience* and *artificial intelligence* but at the moment I spend most of my time developing *machine learning* models at [*Prometeia*](https://www.prometeia.it/en/home). When really inspired I might lift weights or write something here. 

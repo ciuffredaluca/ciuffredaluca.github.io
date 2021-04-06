@@ -3,7 +3,7 @@
 
 title: Luca Ciuffreda
 description: >- # this means to ignore newlines until "baseurl:"
-  Bay is a minimal Jekyll Theme.
+  Machine learning and stuff.
 baseurl: "" # the subpath of the site
 url: "https://ciuffredaluca.github.io" # the base hostname & protocol for the site
 og_image: /assets/img/golgi.jpg
@@ -13,7 +13,7 @@ header:
   pages:
     - name: Home
       slug: /
-    - name: Work
+    - name: About
     - name: Blog
 
 footer:

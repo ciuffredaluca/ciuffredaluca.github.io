@@ -5,6 +5,7 @@
 I use [bay theme](https://github.com/eliottvincent/bay) for this cite.
 
 ![trumpet](./assets/img/trumpet.jpg)
+
 *Trumpet*, [Jean-Michel Basquiat](https://en.wikipedia.org/wiki/Jean-Michel_Basquiat), 1984. I just really like this painting.
 
 

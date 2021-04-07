@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Object detection"
+title:  "[WIP] Object detection"
 date:   2021-04-05 14:12:40
 blurb: "A look at an example post using Bay Jekyll theme."
 og_image: /assets/img/content/post-example/Banner.jpg
